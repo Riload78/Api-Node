@@ -2,13 +2,14 @@ const express = require('express')
 const router = express.Router()
 const { validatorCreateItem, validatorGetItem } = require('../validators/tracks')
 const customHeader = require('../middleware/customHeader')
+const authMiddleware = require('../middleware/session')
 const { getItems, getItem, createItem, updateItem, deleteItem } = require('../controller/tracks')
 
 // TODO httt://locoalhost/tracks GET, POST, DELETE, PUT
 /*
 * Obtener todos los registros
 */
-router.get('/', getItems)
+router.get('/', authMiddleware, getItems)
 
 /*
 * Obtener un registro
