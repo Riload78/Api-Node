@@ -3,6 +3,7 @@ const router = express.Router()
 const { validatorCreateItem, validatorGetItem } = require('../validators/tracks')
 const customHeader = require('../middleware/customHeader')
 const authMiddleware = require('../middleware/session')
+const cheeckRol = require('../middleware/role')
 const { getItems, getItem, createItem, updateItem, deleteItem } = require('../controller/tracks')
 
 // TODO httt://locoalhost/tracks GET, POST, DELETE, PUT
@@ -14,21 +15,21 @@ router.get('/', authMiddleware, getItems)
 /*
 * Obtener un registro
 */
-router.get('/:id', validatorGetItem, getItem)
+router.get('/:id', authMiddleware, validatorGetItem, getItem)
 
 /*
 * crear un registro
 */
-router.post('/', validatorCreateItem, customHeader, createItem)
+router.post('/', authMiddleware, cheeckRol(['admin']), validatorCreateItem, customHeader, createItem)
 
 /*
 * actualizar un registro
 */
-router.put('/:id', validatorGetItem, validatorCreateItem, updateItem)
+router.put('/:id', authMiddleware, validatorGetItem, validatorCreateItem, updateItem)
 
 /*
 * Eliminar un registro
 */
-router.delete('/:id', validatorGetItem, deleteItem)
+router.delete('/:id', authMiddleware, validatorGetItem, deleteItem)
 
 module.exports = router
