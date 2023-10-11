@@ -47,6 +47,26 @@ const TracksSchema = new mongoose.Schema(
   }
 )
 
+/**
+ * Implementar relacion a storage
+ **/
+
+TracksSchema.statics.findAllData = function () {
+  const joinData = this.aggregate([
+    {
+      $lookup: {
+        from: 'storages',
+        localField: 'mediaId',
+        foreignField: '_id',
+        as: 'audio'
+      }
+    }
+  ])
+  console.log('entro')
+
+  return joinData
+}
+
 // overwrite actions Mongoose
 TracksSchema.plugin(mongooseDelete, { overrideMethods: 'all' })
 module.exports = mongoose.model('tracks', TracksSchema)

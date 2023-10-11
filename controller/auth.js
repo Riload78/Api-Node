@@ -12,19 +12,21 @@ const { handleHttpError } = require('../utils/handleError')
 const registerController = async (req, res) => {
   try {
     req = matchedData(req)
-    const password = req.password
-    const encryptPassword = await encrypt(password)
-    const body = { ...req, password: encryptPassword }
+    const password = await encrypt(req.password)
+    console.log(password)
+    const body = { ...req, password }
+    console.log(body)
     const dataUser = await usersModel.create(body)
+    console.log('datauser:', dataUser)
     dataUser.set('password', undefined, { strict: false }) // sobreescribo la password para que no se muestre en la data
-
+    console.log(dataUser)
     const data = {
       token: await tokenSign(dataUser),
       user: dataUser
     }
     return res.send({ data })
   } catch (error) {
-    handleHttpError(res, 'Error register User')
+    handleHttpError(res, error)
   }
 }
 
@@ -62,7 +64,7 @@ const loginController = async (req, res) => {
     res.send(data)
   } catch (error) {
     console.log(error)
-    handleHttpError(res, 'Error login')
+    handleHttpError(res, `Error Login: ${error}`)
   }
 }
 

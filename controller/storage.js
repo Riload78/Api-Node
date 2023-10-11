@@ -15,7 +15,7 @@ const getItems = async (req, res) => {
     const data = await storageModel.find({})
     res.send({ data })
   } catch (error) {
-    handleHttpError(res, 'Error_Get_Items')
+    handleHttpError(res, error)
   }
 }
 
@@ -31,7 +31,7 @@ const getItem = async (req, res) => {
     const data = storageModel.findById(id)
     res.send({ data })
   } catch (error) {
-    handleHttpError(res, 'Error_Get_Item')
+    handleHttpError(res, error)
   }
 }
 
@@ -50,7 +50,7 @@ const createItem = async (req, res) => {
     const data = await storageModel.create(fileData)
     res.send(data)
   } catch (error) {
-    handleHttpError(res, 'Error_Create_Item')
+    handleHttpError(res, error)
   }
 }
 

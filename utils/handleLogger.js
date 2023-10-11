@@ -7,7 +7,7 @@ const loggerStream = {
     webhook.send({
       text: message
     })
-    // console.info(message)
+    console.info(message)
   }
 }
 

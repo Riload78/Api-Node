@@ -13,7 +13,7 @@ const getItems = async (req, res) => {
     const data = await tracksModel.find({})
     res.send({ data, user })
   } catch (error) {
-    handleHttpError(res, 'Error_Get_Items')
+    handleHttpError(res, error)
   }
 }
 
@@ -30,7 +30,7 @@ const getItem = async (req, res) => {
     const data = await tracksModel.findById(id)
     res.send({ data })
   } catch (error) {
-    handleHttpError(res, 'Error_Get_Item')
+    handleHttpError(res, error)
   }
 }
 
@@ -46,7 +46,7 @@ const createItem = async (req, res) => {
     const data = await tracksModel.create(body)
     res.send(data)
   } catch (error) {
-    handleHttpError(res, 'Error_Create_Item')
+    handleHttpError(res, error)
   }
 }
 
